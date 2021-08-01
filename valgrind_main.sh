@@ -1,6 +1,6 @@
 #!/bin/sh
 
 
-PYTHONPATH=./cython_memtests/ PYTHONMALLOC=malloc valgrind --leak-check=full --tool=memcheck --suppressions=valgrind-python.suppressions ./main.out
+PYTHONMALLOC=malloc valgrind --leak-check=full --tool=memcheck --show-leak-kinds=all --suppressions=valgrind-python.supp ./main.out 2> valgrind.out
 
 

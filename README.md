@@ -5,5 +5,6 @@
 source venv/bin/activate
 make 
 ./valgrind_main.sh
+less valgrind.out
 ```
 

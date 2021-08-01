@@ -2,15 +2,17 @@
 .PHONY: all
 
 all: 
-	python setup.py -j $(shell nproc) build_ext --inplace -g -v
+	python setup.py build_ext --inplace -g -v
 	python setup.py install
 	export PYTHONPATH=./cython_memtests/
-	g++ -g -I./cython_memtests/ `python-config --ldflags` `python-config --cflags` -lpython main.cpp -o main.out 
+	g++ -g -I./cython_memtests/ $(shell python3-config --includes --ldflags --cflags) -fPIE main.cpp -o main.out -lpython3.8
 	
 clean:
-	find . -type f -name "*.so" -delete
-	find . -type f -name "*_api.h" -delete
+	find ./cython_memtests -type f -name "*.so" -delete
+	find ./cython_memtests -type f -name "*.cpp" -delete
+	find ./cython_memtests -type f -name "*.c" -delete
+	find ./cython_memtests -type f -name "*_api.h" -delete
+	find ./cython_memtests -type f -name "*.html" -delete
 	rm -rf build/ dist/ cython_debug/
-	find . -type -d -name "__pycache__" -delete
-	find . -type f -name "*.html" -delete
+	rm -rf some_cython.*.so
 
